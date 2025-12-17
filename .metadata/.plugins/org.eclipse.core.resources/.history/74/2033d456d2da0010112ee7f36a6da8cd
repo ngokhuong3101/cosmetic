@@ -1,0 +1,5 @@
+package cosmetic.repository;
+
+public class OrderRepository {
+
+}

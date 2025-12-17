@@ -1,0 +1,5 @@
+package adapters.checkout;
+
+public class CheckoutViewModel {
+
+}
