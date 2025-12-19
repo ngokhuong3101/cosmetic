@@ -1,13 +1,13 @@
 package adapters.checkout;
 
-import cosmetic.entities.Order;
+import cosmetic.usecase.checkout.CheckoutRes;
 
 public class CheckoutPresenter {
 	
 	    private CheckoutViewModel viewModel;
 
-	    public void present(Order order) {
-	        viewModel = new CheckoutViewModel(order.getId(), order.getTotalAmount(), order.getStatus().name());
+	    public void present(CheckoutRes res) {
+	        viewModel = new CheckoutViewModel(res.getOrderId(), res.getTotalAmount(), res.getStatus());
 	    }
 
 	    public void presentError(String message) {
@@ -18,5 +18,6 @@ public class CheckoutPresenter {
 	        return viewModel;
 	    }
 	}
+
 
 

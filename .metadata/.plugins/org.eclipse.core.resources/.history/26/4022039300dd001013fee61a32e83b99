@@ -1,0 +1,22 @@
+package adapters.checkout;
+
+import cosmetic.entities.Order;
+
+public class CheckoutPresenter {
+	
+	    private CheckoutViewModel viewModel;
+
+	    public void present(Order order) {
+	        viewModel = new CheckoutViewModel(order.getId(), order.getTotalAmount(), order.getStatus().name());
+	    }
+
+	    public void presentError(String message) {
+	        viewModel = new CheckoutViewModel(null, 0, message);
+	    }
+
+	    public CheckoutViewModel getViewModel() {
+	        return viewModel;
+	    }
+	}
+
+

@@ -35,7 +35,7 @@ public class Order {
 
 	        Order order = new Order();
 	        order.userId = user.getId();
-	        order.status = OrderStatus.PENDING;
+	        order.status = OrderStatus.CREATED;
 	        order.createdAt = LocalDateTime.now();
 	        order.shippingAddress = address;
 	        order.phone = phone;

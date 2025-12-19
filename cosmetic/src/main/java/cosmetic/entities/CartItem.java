@@ -24,5 +24,6 @@ public class CartItem {
 
     public Product getProduct() { return product; }
     public int getQuantity() { return quantity; }
+    
 }
 

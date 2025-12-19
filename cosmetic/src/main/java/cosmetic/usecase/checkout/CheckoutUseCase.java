@@ -2,13 +2,14 @@ package cosmetic.usecase.checkout;
 
 import cosmetic.entities.Cart;
 import cosmetic.entities.Order;
+import cosmetic.entities.OrderStatus;
 import cosmetic.entities.User;
 import cosmetic.repository.CartRepository;
 import cosmetic.repository.OrderRepository;
 
 public class CheckoutUseCase {
 	
-	    private final CartRepository cartRepo;
+	 private final CartRepository cartRepo;
 	    private final OrderRepository orderRepo;
 
 	    public CheckoutUseCase(CartRepository cartRepo, OrderRepository orderRepo) {
@@ -16,19 +17,27 @@ public class CheckoutUseCase {
 	        this.orderRepo = orderRepo;
 	    }
 
-	    public Order execute(Long userId, User user, String address, String phone, String paymentMethod) {
-	        Cart cart = cartRepo.findByUserId(userId);
+	    public CheckoutRes execute(CheckoutReq req, User user) {
+	    	if (req.getAddress() == null || req.getAddress().isBlank()
+	    			|| req.getPhone() == null || req.getPhone().isBlank()) {
+	    		throw new RuntimeException("Dữ liệu checkout không hợp lệ");
+	    	}
+	        Cart cart = cartRepo.findByUserId(req.getUserId());
 	        if (cart == null || cart.isEmpty()) {
 	            throw new RuntimeException("Giỏ hàng trống");
 	        }
 
-	        Order order = Order.createFromCart(cart, user, address, phone, paymentMethod);
+	        Order order = Order.createFromCart(cart, user, req.getAddress(), req.getPhone(), req.getPaymentMethod());
+	        
+	        order.setStatus(OrderStatus.CREATED);
 	        orderRepo.save(order);
-	        cartRepo.clear(userId);
+	        cartRepo.clear(req.getUserId());
+	        
 
-	        return order;
+	        return new CheckoutRes(order.getId(), order.getTotalAmount(), order.getStatus().name());
 	    }
 	}
+
 
 	
 
