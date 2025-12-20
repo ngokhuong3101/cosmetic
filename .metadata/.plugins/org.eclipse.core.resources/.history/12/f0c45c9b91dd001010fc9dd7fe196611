@@ -18,15 +18,9 @@ public class CheckoutUseCase {
 	    }
 
 	    public CheckoutRes execute(CheckoutReq req, User user) {
-	    	if (user == null) {
-	    		throw new RuntimeException("Vui lòng đăng nhập để thanh toán");
-	    	}
 	    	if (req.getAddress() == null || req.getAddress().isBlank()
 	    			|| req.getPhone() == null || req.getPhone().isBlank()) {
 	    		throw new RuntimeException("Dữ liệu checkout không hợp lệ");
-	    	}
-	    	if (!req.getPhone().matches("\\d{10,11}")) { 
-	    		throw new RuntimeException("Số điện thoại không hợp lệ");
 	    	}
 	        Cart cart = cartRepo.findByUserId(req.getUserId());
 	        if (cart == null || cart.isEmpty()) {
